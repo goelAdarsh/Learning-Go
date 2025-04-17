@@ -56,8 +56,32 @@ func main() {
 	// -----------------------------
 
 	//  EXAMPLE 6
+	// const inflationRate = 6.5
+	// investmentAmount, expectedReturnRate, years := 1000.0, 5.5, 10.0
+
+	// futureValue := investmentAmount * math.Pow((1+expectedReturnRate/100), years)
+	// futureRealValue := futureValue / math.Pow((1+inflationRate/100), years)
+
+	// fmt.Println(futureValue)
+	// fmt.Println(futureRealValue)
+	// -----------------------------
+
+	// EXAMPLE 7
 	const inflationRate = 6.5
-	investmentAmount, expectedReturnRate, years := 1000.0, 5.5, 10.0
+
+	// var investmentAmount float64 = 1000 // will be overwritten by user input
+	// expectedReturnRate, years := 5.5, 10.0
+
+	var investmentAmount, expectedReturnRate, years float64
+
+	fmt.Print("Investment Amount: ")
+	fmt.Scan(&investmentAmount)
+
+	fmt.Print("Expected Return Rate: ")
+	fmt.Scan(&expectedReturnRate)
+
+	fmt.Print("Years: ")
+	fmt.Scan(&years)
 
 	futureValue := investmentAmount * math.Pow((1+expectedReturnRate/100), years)
 	futureRealValue := futureValue / math.Pow((1+inflationRate/100), years)
