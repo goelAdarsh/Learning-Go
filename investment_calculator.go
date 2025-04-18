@@ -1,10 +1,5 @@
 package main
 
-// import (
-// 	"fmt"
-// 	"math"
-// )
-
 // func main() {
 // 	// EXAMPLE 1
 // 	// fmt.Print("Hello World!");
@@ -86,6 +81,14 @@ package main
 // 	futureValue := investmentAmount * math.Pow((1+expectedReturnRate/100), years)
 // 	futureRealValue := futureValue / math.Pow((1+inflationRate/100), years)
 
-// 	fmt.Println(futureValue)
-// 	fmt.Println(futureRealValue)
+// 	// fmt.Println("Future Value:", futureValue) // outputs in the same line separated by a blank
+// 	// fmt.Println("Future Value (adjusted after Inflation):", futureRealValue)
+
+// 	// fmt.Printf("Future Value: %v\n", futureValue) // %v - value of a variable/constant
+
+// 	fmt.Printf("Future Value: %v\nFuture Value (adjusted after Inflation): %v\n", futureValue, futureRealValue)     // 1708.1444583535929, 909.9730253950707
+
+// 	fmt.Printf("Future Value: %f\nFuture Value (adjusted after Inflation): %f\n", futureValue, futureRealValue)     // 1708.144458, 909.973025
+// 	fmt.Printf("Future Value: %.2f\nFuture Value (adjusted after Inflation): %.2f\n", futureValue, futureRealValue) // 1708.14, 909.97
+// 	fmt.Printf("Future Value: %.0f\nFuture Value (adjusted after Inflation): %.0f", futureValue, futureRealValue)   // 1708, 910;
 // }
