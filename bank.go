@@ -1,9 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+	// contains utility functions to work eith strings
+)
+
+const accountBalanceFile = "balance.txt"
+
+func getBalanceFromFile() float64 {
+	data, _ := os.ReadFile(accountBalanceFile) // _ eplicitly tells Go that we know there's a value but we don't wanna use it
+	balanceText := string(data)                // []byte --> string
+	balance, _ := strconv.ParseFloat(balanceText, 64)
+	return balance
+}
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance) // to convert balance from float64 to a string, which can be converted into []byte
+	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
+	// 0644 : 6-Owner(rw-); 4-Group(r--); 4-Others(r--)
+}
 
 func main() {
-	var accountBalance = 1000.0
+	var accountBalance = getBalanceFromFile()
 
 	fmt.Println("|| Welcome to Go Bank ||")
 
@@ -33,7 +53,7 @@ func main() {
 			}
 
 			accountBalance += depositAmount
-
+			writeBalanceToFile(accountBalance)
 			fmt.Println("Balance updated! New amount:", accountBalance)
 
 		case 3:
@@ -52,11 +72,12 @@ func main() {
 			}
 
 			accountBalance -= withdrawalAmount
-
+			writeBalanceToFile(accountBalance)
 			fmt.Println("Balance updated! New amount:", accountBalance)
 		default:
 			fmt.Println("Thank You for choosing Go Bank.")
 			fmt.Println("Please visit us again! Goodbye 👋")
+			// break // cannot use; it breaks out of switch-case and not of for-loop; hence, better solution --> if-else-if-else
 			return
 		}
 		// end of switch
