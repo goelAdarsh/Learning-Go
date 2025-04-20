@@ -6,18 +6,57 @@ func main() {
 	var accountBalance = 1000.0
 
 	fmt.Println("|| Welcome to Go Bank ||")
-	fmt.Println("What do you want to do?")
-	fmt.Println("1. Check balance")
-	fmt.Println("2. Deposit money")
-	fmt.Println("3. Withdraw money")
-	fmt.Println("4. Exit")
 
-	var choice int
-	fmt.Print("Your choice: ")
-	fmt.Scan(&choice)
-	// fmt.Println("Your choice:", choice)
+	for {
+		fmt.Println("What do you want to do?")
+		fmt.Println("1. Check balance")
+		fmt.Println("2. Deposit money")
+		fmt.Println("3. Withdraw money")
+		fmt.Println("4. Exit")
 
-	if choice == 1 {
-		fmt.Println("Your balance is", accountBalance)
+		fmt.Print("Your choice: ")
+		var choice int
+		fmt.Scan(&choice) // if a value other than int is entered, it will be assigned a default value of 0
+		// fmt.Println("Your choice:", choice)
+
+		if choice == 1 {
+			fmt.Println("Your balance is", accountBalance)
+		} else if choice == 2 {
+			fmt.Print("Your deposit amount: ")
+			var depositAmount float64
+			fmt.Scan(&depositAmount)
+
+			if depositAmount <= 0 {
+				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
+				continue
+			}
+
+			accountBalance += depositAmount
+
+			fmt.Println("Balance updated! New amount:", accountBalance)
+		} else if choice == 3 {
+			fmt.Print("Your withdrawal amount: ")
+			var withdrawalAmount float64
+			fmt.Scan(&withdrawalAmount)
+
+			if withdrawalAmount <= 0 {
+				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
+				continue
+			}
+
+			if withdrawalAmount > accountBalance {
+				fmt.Println("Oops! You are trying to withdraw an amount greater than your current account balance.")
+				continue
+			}
+
+			accountBalance -= withdrawalAmount
+
+			fmt.Println("Balance updated! New amount:", accountBalance)
+		} else {
+			fmt.Println("Thank You for choosing Go Bank.")
+			break
+		}
 	}
+
+	fmt.Println("Please visit us again! Goodbye 👋")
 }
