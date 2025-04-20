@@ -1,88 +1,112 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"strconv"
-	// contains utility functions to work eith strings
-)
+// import (
+// 	"errors"
+// 	"fmt"
+// 	"os"
+// 	"strconv"
+// 	// contains utility functions to work eith strings
+// )
 
-const accountBalanceFile = "balance.txt"
+// const accountBalanceFile = "balance.txt"
 
-func getBalanceFromFile() float64 {
-	data, _ := os.ReadFile(accountBalanceFile) // _ eplicitly tells Go that we know there's a value but we don't wanna use it
-	balanceText := string(data)                // []byte --> string
-	balance, _ := strconv.ParseFloat(balanceText, 64)
-	return balance
-}
+// func getBalanceFromFile() (float64, error) {
+// 	// data, _ := os.ReadFile(accountBalanceFile) // _ eplicitly tells Go that we know there's a value but we don't wanna use it
+// 	// if the file doesn't exist, Go doesn't crashes the application unlike other programming languages, instead returns an empty []byte collection, which is then converted into an empty string (below), which is then converted to 0
+// 	// all functions in Go, are and should be written in such a way that it doesn't crashes the application
 
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance) // to convert balance from float64 to a string, which can be converted into []byte
-	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
-	// 0644 : 6-Owner(rw-); 4-Group(r--); 4-Others(r--)
-}
+// 	data, err := os.ReadFile(accountBalanceFile)
 
-func main() {
-	var accountBalance = getBalanceFromFile()
+// 	// nil - special value in Go that indicates absence of a useful value
+// 	if err != nil {
+// 		return 1000, errors.New("Failed to read balance from the file.") // default balance
+// 	}
 
-	fmt.Println("|| Welcome to Go Bank ||")
+// 	balanceText := string(data) // []byte --> string
 
-	for {
-		fmt.Println("What do you want to do?")
-		fmt.Println("1. Check balance")
-		fmt.Println("2. Deposit money")
-		fmt.Println("3. Withdraw money")
-		fmt.Println("4. Exit")
+// 	balance, err := strconv.ParseFloat(balanceText, 64) // string --> float
+// 	if err != nil {
+// 		return 1000, errors.New("Failed to parse stored balance value.") // default balance
+// 	}
 
-		fmt.Print("Your choice: ")
-		var choice int
-		fmt.Scan(&choice) // if a value other than int is entered, it will be assigned a default value of 0
+// 	return balance, nil // nil states no errors
+// }
 
-		switch choice {
-		case 1:
-			fmt.Println("Your balance is", accountBalance)
+// func writeBalanceToFile(balance float64) {
+// 	balanceText := fmt.Sprint(balance) // to convert balance from float64 to a string, which can be converted into []byte
+// 	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
+// 	// 0644 : 6-Owner(rw-); 4-Group(r--); 4-Others(r--)
+// }
 
-		case 2:
-			fmt.Print("Your deposit amount: ")
-			var depositAmount float64
-			fmt.Scan(&depositAmount)
+// func main() {
+// 	var accountBalance, err = getBalanceFromFile()
 
-			if depositAmount <= 0 {
-				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
-				continue
-			}
+// 	if err != nil {
+// 		fmt.Println("ERROR 💥")
+// 		fmt.Println(err)
+// 		fmt.Println("----------")
+// 		// return // if an error occurs, exit the application
+// 		panic("Sorry! Can't continue.") // alternative to return but makes it look more like a crash
+// 	}
 
-			accountBalance += depositAmount
-			writeBalanceToFile(accountBalance)
-			fmt.Println("Balance updated! New amount:", accountBalance)
+// 	fmt.Println("|| Welcome to Go Bank ||")
 
-		case 3:
-			fmt.Print("Your withdrawal amount: ")
-			var withdrawalAmount float64
-			fmt.Scan(&withdrawalAmount)
+// 	for {
+// 		fmt.Println("What do you want to do?")
+// 		fmt.Println("1. Check balance")
+// 		fmt.Println("2. Deposit money")
+// 		fmt.Println("3. Withdraw money")
+// 		fmt.Println("4. Exit")
 
-			if withdrawalAmount <= 0 {
-				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
-				continue
-			}
+// 		fmt.Print("Your choice: ")
+// 		var choice int
+// 		fmt.Scan(&choice) // if a value other than int is entered, it will be assigned a default value of 0
 
-			if withdrawalAmount > accountBalance {
-				fmt.Println("Oops! You are trying to withdraw an amount greater than your current account balance.")
-				continue
-			}
+// 		switch choice {
+// 		case 1:
+// 			fmt.Println("Your balance is", accountBalance)
 
-			accountBalance -= withdrawalAmount
-			writeBalanceToFile(accountBalance)
-			fmt.Println("Balance updated! New amount:", accountBalance)
-		default:
-			fmt.Println("Thank You for choosing Go Bank.")
-			fmt.Println("Please visit us again! Goodbye 👋")
-			// break // cannot use; it breaks out of switch-case and not of for-loop; hence, better solution --> if-else-if-else
-			return
-		}
-		// end of switch
+// 		case 2:
+// 			fmt.Print("Your deposit amount: ")
+// 			var depositAmount float64
+// 			fmt.Scan(&depositAmount)
 
-	}
-	// end of for loop
+// 			if depositAmount <= 0 {
+// 				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
+// 				continue
+// 			}
 
-}
+// 			accountBalance += depositAmount
+// 			writeBalanceToFile(accountBalance)
+// 			fmt.Println("Balance updated! New amount:", accountBalance)
+
+// 		case 3:
+// 			fmt.Print("Your withdrawal amount: ")
+// 			var withdrawalAmount float64
+// 			fmt.Scan(&withdrawalAmount)
+
+// 			if withdrawalAmount <= 0 {
+// 				fmt.Println("Oops! Invalid amount. Must be greater than zero.")
+// 				continue
+// 			}
+
+// 			if withdrawalAmount > accountBalance {
+// 				fmt.Println("Oops! You are trying to withdraw an amount greater than your current account balance.")
+// 				continue
+// 			}
+
+// 			accountBalance -= withdrawalAmount
+// 			writeBalanceToFile(accountBalance)
+// 			fmt.Println("Balance updated! New amount:", accountBalance)
+// 		default:
+// 			fmt.Println("Thank You for choosing Go Bank.")
+// 			fmt.Println("Please visit us again! Goodbye 👋")
+// 			// break // cannot use; it breaks out of switch-case and not of for-loop; hence, better solution --> if-else-if-else
+// 			return
+// 		}
+// 		// end of switch
+
+// 	}
+// 	// end of for loop
+
+// }
